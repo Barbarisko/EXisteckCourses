@@ -28,10 +28,10 @@ namespace Hometask1
                                 "1 - proga\n" +
                                 "2 - management\n" +
                                 "3 - design\n ");
-            string subj = Console.ReadLine();
+            uint subj = Convert.ToUInt32(Console.ReadLine());
 
             Console.WriteLine("Give a grade: ");
-            string grade = Console.ReadLine();
+            uint grade = Convert.ToUInt32(Console.ReadLine());
 
             school.students[0].SetGrade(grade, subj);
 

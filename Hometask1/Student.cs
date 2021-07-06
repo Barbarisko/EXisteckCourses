@@ -52,22 +52,35 @@ namespace Hometask1
 
         }
 
-        public void SetGrade(string grade, string subject)
+        public void SetGrade(uint grade, uint subject)
         {
             int i = Convert.ToInt32(subject)-1;
 
-            if (Enum.IsDefined(typeof(Subjects), i))
+            if(subject>Enum.GetValues<Subjects>().Length)
             {
-                if (grade.All(char.IsDigit))
-                {
-                    uint g = Convert.ToUInt32(grade);
-                    Grades[i](g);
-                }
-                else
-                {
-                    throw new ArgumentNullException("This is not a digit");
-                }
-            }            
+                      throw new ArgumentNullException("No such digit");
+            }
+            if (Convert.ToString(grade).All(char.IsDigit))
+            {
+                //uint g = Convert.ToUInt32(grade);
+                Grades[i].Append(grade);
+            }
+            else
+            {
+                throw new ArgumentNullException("This is not a digit");
+            }
+            //if (Enum.IsDefined(typeof(Subjects), i))
+            //{
+            //    if (grade.All(char.IsDigit))
+            //    {
+            //        uint g = Convert.ToUInt32(grade);
+            //        Grades[i](g);
+            //    }
+            //    else
+            //    {
+            //        throw new ArgumentNullException("This is not a digit");
+            //    }
+            //}            
         }
 
         public decimal CountAverageGrade(uint[] grades)
