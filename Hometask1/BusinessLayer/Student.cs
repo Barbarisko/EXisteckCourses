@@ -17,9 +17,9 @@ namespace Hometask1
 
     enum Subjects
     {
-        programming, 
-        management, 
-        design
+        Programming, 
+        Management, 
+        Design
     }
     public class Student
     {
@@ -28,68 +28,46 @@ namespace Hometask1
         private string lastname;
         private string groupcode;
         private uint age;
-        private uint[][] grades;
+        private List<List<uint>> grades;
 
         public string Surname { get => surname; set => surname = value; }
         public string Name { get => name; set => name = value; }
         public string Lastname { get => lastname; set => lastname = value; }
         public string Groupcode { get => groupcode; set => groupcode = value; }
         public uint Age { get => age; set => age = value; }
-        public uint[][] Grades { get => grades; set => grades = value; }
+        public List<List<uint>> Grades { get => grades; set => grades = value; }
 
         public Student()
         {
-            Grades = new uint[3][]
+            Grades = new List<List<uint>>
             {
-                new uint[0] {},
-                new uint[0] {},
-                new uint[0] {}
-            };
-            
+                new List<uint>(),
+                new List<uint>(),
+                new List<uint>()
+            };            
         }
+
         public Student(string _surname, string _name, string _lastname, uint _age)
         {
 
         }
 
+
         public void SetGrade(uint grade, uint subject)
         {
-            int i = Convert.ToInt32(subject)-1;
+            int i = (int)subject - 1;
 
-            if(subject>Enum.GetValues<Subjects>().Length)
+            if (subject > Enum.GetValues<Subjects>().Length)
             {
-                      throw new ArgumentNullException("No such digit");
+                throw new ArgumentNullException("No such digit");
             }
-            if (Convert.ToString(grade).All(char.IsDigit))
-            {
-                //uint g = Convert.ToUInt32(grade);
-                Grades[i].Append(grade);
-            }
-            else
+
+            if (!Convert.ToString(grade).All(char.IsDigit))
             {
                 throw new ArgumentNullException("This is not a digit");
             }
-            //if (Enum.IsDefined(typeof(Subjects), i))
-            //{
-            //    if (grade.All(char.IsDigit))
-            //    {
-            //        uint g = Convert.ToUInt32(grade);
-            //        Grades[i](g);
-            //    }
-            //    else
-            //    {
-            //        throw new ArgumentNullException("This is not a digit");
-            //    }
-            //}            
-        }
 
-        public decimal CountAverageGrade(uint[] grades)
-        {
-            return 0;
-        }
-        public void PrintStudentInfo(int id)
-        {
-             
+            Grades[i].Add(grade);
         }
     }
 
