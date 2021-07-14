@@ -8,5 +8,9 @@ namespace Hometask4.Services
 {
     public class PlaneService
     {
+        public uint SetFlightHeight(string height)
+        {
+            if()
+        }
     }
 }
