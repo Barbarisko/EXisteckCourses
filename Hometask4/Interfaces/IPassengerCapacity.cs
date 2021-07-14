@@ -10,5 +10,9 @@ namespace Hometask4.Interfaces
     public interface IPassengerCapacity
     {
         uint PassengerCapacity { get; set; }
+        uint Passengers { get; }
+
+        void AddPeople(string quantity);
+        void KickPeople(string quantity);
     }
 }

@@ -10,6 +10,7 @@ namespace Hometask4
     //Для судна повинен бути визначений порт приписки, для літака і судна – кількість пасажирів.
     public class Ship : IVehicle, IPassengerCapacity
     {
+        private uint passengers;
         private uint cost;
         private uint velocity;
         private uint prodYear;
@@ -21,5 +22,55 @@ namespace Hometask4
         public uint ProdYear { get => prodYear; set => prodYear = value; }
         public uint PassengerCapacity { get => passengerCapacity; set => passengerCapacity = value; }
         public string Port { get => port; set => port = value; }
+
+        public uint Passengers => passengers;
+
+        public Ship()
+        {
+
+        }
+        public Ship(uint _velocity, uint _prodyear, uint _passCapac)
+        {
+            Velocity = _velocity;
+            ProdYear = _prodyear;
+            PassengerCapacity = _passCapac;
+            Cost = _velocity * _prodyear + _passCapac;
+            Port = "";
+        }
+
+        public void AddPeople(string quantity)
+        {
+            if (!quantity.All(char.IsDigit))
+            {
+                throw new ArgumentNullException("This is not a digit");
+            }
+            if ((passengers + Convert.ToUInt32(quantity)) > PassengerCapacity)
+            {
+                throw new Exception("Vi ne poletite. Vi zhirnyi.");
+            }
+
+            passengers += Convert.ToUInt32(quantity);
+        }
+
+        public void KickPeople(string quantity)
+        {
+            if (!quantity.All(char.IsDigit))
+            {
+                throw new ArgumentNullException("This is not a digit");
+            }
+            if ((passengers - Convert.ToUInt32(quantity)) < 0)
+            {
+                throw new Exception("A zachem vam letet'?");
+            }
+
+            passengers -= Convert.ToUInt32(quantity);
+        }
+
+
+        public override string ToString()
+        {
+            return $"Plavadlo {prodYear} roku vipusku, {velocity} km/god, vartue {cost} grn.\n" +
+                $"Sidit v portu {port} , mae {passengers} passagiriv z {passengerCapacity}";
+        }
     }
 }
