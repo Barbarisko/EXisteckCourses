@@ -89,7 +89,7 @@ namespace Hometask4
             {
                 throw new ArgumentNullException("This is not a digit");
             }
-            if ((passengers - Convert.ToUInt32(quantity)) <0)
+            if ((Convert.ToInt64(passengers) - Convert.ToInt64(quantity)) <0)
             {
                 throw new Exception("A zachem vam letet'?");
             }

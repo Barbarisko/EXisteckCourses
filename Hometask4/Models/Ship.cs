@@ -29,13 +29,13 @@ namespace Hometask4
         {
 
         }
-        public Ship(uint _velocity, uint _prodyear, uint _passCapac)
+        public Ship(uint _velocity, uint _prodyear, uint _passCapac, string _port)
         {
             Velocity = _velocity;
             ProdYear = _prodyear;
             PassengerCapacity = _passCapac;
             Cost = _velocity * _prodyear + _passCapac;
-            Port = "";
+            Port = _port;
         }
 
         public void AddPeople(string quantity)
@@ -46,7 +46,7 @@ namespace Hometask4
             }
             if ((passengers + Convert.ToUInt32(quantity)) > PassengerCapacity)
             {
-                throw new Exception("Vi ne poletite. Vi zhirnyi.");
+                throw new Exception("Vi ne poplivete. Vi zhirnyi.");
             }
 
             passengers += Convert.ToUInt32(quantity);
@@ -58,9 +58,9 @@ namespace Hometask4
             {
                 throw new ArgumentNullException("This is not a digit");
             }
-            if ((passengers - Convert.ToUInt32(quantity)) < 0)
+            if ((Convert.ToInt64(passengers) - Convert.ToInt64(quantity)) < 0)
             {
-                throw new Exception("A zachem vam letet'?");
+                throw new Exception("A zachem vam plavat'?");
             }
 
             passengers -= Convert.ToUInt32(quantity);
@@ -70,7 +70,7 @@ namespace Hometask4
         public override string ToString()
         {
             return $"Plavadlo {prodYear} roku vipusku, {velocity} km/god, vartue {cost} grn.\n" +
-                $"Sidit v portu {port} , mae {passengers} passagiriv z {passengerCapacity}";
+                $"Sidit v portu {port} , mae {passengers} passagiriv z {passengerCapacity}\n";
         }
     }
 }

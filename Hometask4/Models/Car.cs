@@ -16,11 +16,11 @@ namespace Hometask4
         public uint Velocity { get => velocity; set => velocity = value; }
         public uint ProdYear { get => prodYear; set => prodYear = value; }
 
-        public Car(uint _velocity, uint _prodyear, uint _passCapac)
+        public Car(uint _velocity, uint _prodyear)
         {
             Velocity = _velocity;
             ProdYear = _prodyear;
-            Cost = _velocity + _prodyear + _passCapac;
+            Cost = _velocity * _prodyear;
         }
 
         public override string ToString()
