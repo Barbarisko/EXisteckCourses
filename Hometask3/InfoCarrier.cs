@@ -17,16 +17,17 @@ namespace Hometask3
         private string model;
         private int quantity;
         private int price;
+        private string information = "";
 
         public string Name { get => name; set => name = value; }
         public string ManufacturerName { get => manufacturerName; set => manufacturerName = value; }
         public string Model { get => model; set => model = value; }
         public int Quantity { get => quantity; set => quantity = value; }
         public int Price { get => price; set => price = value; }
+        public string Information { get => information; set => information = value; }
 
-        public virtual void PrintInfo(InfoCarrier carrier) { }
-        public virtual void DownloadInto(InfoCarrier carrier) { }
-        public virtual void Save(InfoCarrier carrier) { }
-            
+        public virtual void DownloadInto(string info) { }
+        public virtual void Save(string info) { }
+
     }
 }
