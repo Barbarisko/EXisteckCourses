@@ -32,18 +32,19 @@ namespace Hometask3
         static void Main(string[] args)
         {
             var plist = Init();
-
-            Console.WriteLine("Hi, this is the electronic store price list. See what we have:\n");
-            plist.PrintDrives();
-
-            Console.WriteLine("This you can do with the list:\n");
-            Console.WriteLine("1 - Add new item \n" +
-                "2 - search item by input text\n");
-            try
+            while (true)
             {
-                string  ans = Console.ReadLine();
-                if (ans == "1")
+                Console.WriteLine("Hi, this is the electronic store price list. See what we have:\n");
+                plist.PrintDrives();
+
+                Console.WriteLine("This you can do with the list:\n" +
+                                    "1 - Add new item \n" +
+                                    "2 - search item by input text\n");
+                try
                 {
+                    string ans = Console.ReadLine();
+                    if (ans == "1")
+                    {
                         Console.WriteLine("Choose a drive to add:\n" +
                             "1 - HDD\n" +
                             "2 - DVD\n" +
@@ -52,8 +53,8 @@ namespace Hometask3
                         var basics = CreateBasicDrive();
                         try
                         {
-                            CreateSpecifiedDrive(res, basics);
-                        Console.WriteLine("Created!");
+                            CreateSpecifiedDrive(res, basics, plist);
+                            Console.WriteLine("Created!");
 
                         }
                         catch (Exception e)
@@ -62,16 +63,16 @@ namespace Hometask3
                             Console.ReadKey();
                             Console.Clear();
                         }
-                    
-                }
 
-                else if (ans == "2")
-                {
-                    while (true)
+                    }
+
+                    else if (ans == "2")
                     {
                         Console.WriteLine("input text to start search");
+
                         var input = Console.ReadLine();
                         var drive = plist.SearchThroughDrives(input);
+                        plist.PrintDrive(drive);
 
                         Console.WriteLine("Need to delete it? [y/n]");
                         var answ = Console.ReadLine();
@@ -83,17 +84,19 @@ namespace Hometask3
 
                         Console.ReadKey();
                         Console.Clear();
-                    }
-                }
 
-                else throw new KeyNotFoundException("no other options");
+                    }
+
+                    else throw new KeyNotFoundException("no other options");
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e.Message);
+                    Console.ReadKey();
+                    Console.Clear();
+                }
             }
-            catch(Exception e)
-            {
-                Console.WriteLine(e.Message);
-                Console.ReadKey();
-                Console.Clear();
-            }    
+            
 
         }
         public static string[] CreateBasicDrive()
@@ -116,7 +119,7 @@ namespace Hometask3
 
             return new string[5] {name, manufacturer_name, model, quantity, price };
         }
-        public static void CreateSpecifiedDrive(int res, string[] basics)
+        public static void CreateSpecifiedDrive(int res, string[] basics, Pricelist plist)
         {
             InfoCarrier drive;
 
@@ -135,6 +138,8 @@ namespace Hometask3
                         Quantity = Convert.ToInt32(basics[3]),
                         Price = Convert.ToInt32(basics[4])
                     };
+
+                    plist.AddDrive(drive);
                     break;
                 case 2:
                     Console.WriteLine("Also, please provide read_speed:");
@@ -149,6 +154,8 @@ namespace Hometask3
                         Quantity = Convert.ToInt32(basics[3]),
                         Price = Convert.ToInt32(basics[4])
                     };
+                    plist.AddDrive(drive);
+
                     break;
                 case 3:
                     Console.WriteLine("Also, please provide memory capacity:");
@@ -163,6 +170,8 @@ namespace Hometask3
                         Quantity = Convert.ToInt32(basics[3]),
                         Price = Convert.ToInt32(basics[4])
                     };
+                    plist.AddDrive(drive);
+
                     break;
                 default:
                     Console.WriteLine("no other options");

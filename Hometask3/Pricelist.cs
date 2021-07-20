@@ -62,8 +62,10 @@ namespace Hometask3
         }
 
 
-        public static void PrintDrive(InfoCarrier drive)
+        public void PrintDrive(InfoCarrier drive)
         {
+            if(drive == null) throw new ArgumentNullException("No item found. Use different spelling!");
+
             Console.WriteLine(drive.Name);
             Console.WriteLine(drive.Model);
             Console.WriteLine(drive.ManufacturerName);
