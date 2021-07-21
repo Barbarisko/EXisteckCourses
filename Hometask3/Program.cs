@@ -63,7 +63,6 @@ namespace Hometask3
                             Console.ReadKey();
                             Console.Clear();
                         }
-
                     }
 
                     else if (ans == "2")
