@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Hometask8
@@ -32,38 +33,58 @@ namespace Hometask8
                     matrix[i, j] = rnd.Next(0, 10);
                 }
             }
-
-            PrintMatrix(this);
-        }
+       }
 
         public static Matrix operator *(Matrix m1, Matrix m2)
         {
+            if (m1.rows != m2.columns && m1.columns != m2.rows)
+                throw new ArgumentOutOfRangeException("Matrixes are not complementary");
+
             List<int>[,] res = new List<int>[m1.rows, m2.columns];
-            
+            List<Thread> ths = new List<Thread>();
             for (int i = 0; i < m1.rows; i++)
             {
                 for (int j = 0; j < m2.columns; j++)
                 {
                     res[i, j] = new List<int>();
-                    Multiply(m1, m2, i, j, res);
+                    for (int k = 0; k < m1.columns; k++)
+                    {
+                        var t1 = new Thread(Multiply);
+                        t1.Start(new WorkingParams()
+                        {
+                            M1 = m1.matrix[i, k],
+                            M2 = m2.matrix[k, j],
+                            I = i,
+                            J = j,
+                            Res = res
+                        });
+                        ths.Add(t1);
 
+                        //Multiply(m1.matrix[i,k], m2.matrix[k,j], i, j, res);
+                    }
                 }
             }
-
+            foreach(var t in ths)
+            {
+                t.Join();
+            }
             var new_m = new Matrix(m1.rows, m2.columns);
 
             SumElements(res, new_m);
 
             return new_m;
         }
-        private static void Multiply(Matrix m1, Matrix m2, int i, int j, List<int>[,] res)
+        private static void Multiply(object obj)
         {
-            for (int k = 0; k < m1.columns; k++)
+            if (obj is WorkingParams workp)
             {
-                Console.WriteLine($"{m1.matrix[i, k]} * {m2.matrix[k, j]} = {m1.matrix[i, k] * m2.matrix[k, j]}");
+                //Console.WriteLine($"{workp.M1} * {workp.M2} = {workp.M1 * workp.M2}");
 
-                res[i, j].Add(m1.matrix[i, k] * m2.matrix[k, j]);
-            }
+                lock (workp.Res)
+                {
+                    workp.Res[workp.I, workp.J].Add(workp.M1 * workp.M2);
+                }
+            }            
         }
         private static void SumElements(List<int>[,] res, Matrix new_m)
         {
@@ -91,6 +112,7 @@ namespace Hometask8
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine("======================");
         }
         
     }
