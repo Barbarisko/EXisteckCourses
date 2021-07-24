@@ -6,7 +6,10 @@ namespace Hometask6
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            for (int i = 1; i<=27; i++)
+            {
+                new Point(0, 0);
+            }
         }
     }
 }
